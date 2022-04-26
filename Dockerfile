@@ -26,8 +26,9 @@ VOLUME [ /near ]
 WORKDIR /near
 COPY . .
 
+ENV RUST_LOG="debug,actix_web=info"
 ENV PORTABLE=ON
-ARG make_target=
+ARG make_target=neard
 RUN make CARGO_TARGET_DIR=/tmp/target \
          "${make_target:?make_target not set}"
 
@@ -39,8 +40,9 @@ EXPOSE 3030 24567
 RUN apt-get update -qq && apt-get install -y \
     libssl-dev ca-certificates \
     && rm -rf /var/lib/apt/lists/*
+ENV RUST_LOG="debug,actix_web=info"
 
-COPY scripts/run_docker.sh /usr/local/bin/run.sh
+COPY ./tools/protocol-sandbox/docker/run_docker_local_test.sh /usr/local/bin/run.sh
 COPY --from=build /tmp/target/release/neard /usr/local/bin/
 
 CMD ["/usr/local/bin/run.sh"]
