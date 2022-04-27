@@ -42,7 +42,7 @@ RUN apt-get update -qq && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 ENV RUST_LOG="debug,actix_web=info"
 
-COPY ./tools/protocol-sandbox/docker/run_docker_local_test.sh /usr/local/bin/run.sh
+# COPY ./tools/protocol-sandbox/docker/run_docker_local_test.sh /usr/local/bin/run.sh
 COPY --from=build /tmp/target/release/neard /usr/local/bin/
 
 CMD ["/usr/local/bin/run.sh"]
