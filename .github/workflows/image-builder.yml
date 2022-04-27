@@ -5,7 +5,7 @@ on:
     branches: [master]
 
 env:
-  REGISTRY: ghcr.io
+  DOCKERHUB_REPO: quantiksolutions
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}
+            ${{ env.DOCKERHUB_REPO }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
